@@ -10,8 +10,57 @@ import {ai} from '@/ai/genkit';
 import { PredictShipmentTimelineInputSchema, PredictShipmentTimelineOutputSchema } from '@/ai/schemas/predict-shipment-timeline-schema';
 import type { PredictShipmentTimelineInput, PredictShipmentTimelineOutput } from '@/ai/schemas/predict-shipment-timeline-schema';
 
+// Fallback data
+const fallbackPredictions: Record<string, PredictShipmentTimelineOutput> = {
+  'Sucre roux de canne': {
+    estimatedExitDate: '14h',
+    congestionLevel: 'Modérée',
+    readyForPickup: true,
+  },
+  'Unités de traitement (Ordinateurs)': {
+    estimatedExitDate: '3h',
+    congestionLevel: 'Faible',
+    readyForPickup: true,
+  },
+  'Documents de transit': {
+    estimatedExitDate: '45min',
+    congestionLevel: 'Faible',
+    readyForPickup: true,
+  },
+};
+
+function getFallbackPrediction(shipmentDetails: string): PredictShipmentTimelineOutput {
+  if (shipmentDetails.includes('Sucre roux de canne')) {
+    return fallbackPredictions['Sucre roux de canne'];
+  }
+  if (shipmentDetails.includes('Unités de traitement (Ordinateurs)')) {
+    return fallbackPredictions['Unités de traitement (Ordinateurs)'];
+  }
+  if (shipmentDetails.includes('Documents de transit')) {
+    return fallbackPredictions['Documents de transit'];
+  }
+  // Default fallback if no match
+  return fallbackPredictions['Sucre roux de canne'];
+}
+
 export async function predictShipmentTimeline(input: PredictShipmentTimelineInput): Promise<PredictShipmentTimelineOutput> {
-  return predictShipmentTimelineFlow(input);
+  const fallback = getFallbackPrediction(input.shipmentDetails);
+
+  const timeoutPromise = new Promise<PredictShipmentTimelineOutput>((resolve) =>
+    setTimeout(() => {
+      console.log('API call timed out, using fallback prediction.');
+      resolve(fallback);
+    }, 1000)
+  );
+  
+  try {
+    const predictionPromise = predictShipmentTimelineFlow(input);
+    const result = await Promise.race([predictionPromise, timeoutPromise]);
+    return result;
+  } catch (error) {
+    console.error("Gemini API call failed, using fallback prediction.", error);
+    return fallback;
+  }
 }
 
 const prompt = ai.definePrompt({
