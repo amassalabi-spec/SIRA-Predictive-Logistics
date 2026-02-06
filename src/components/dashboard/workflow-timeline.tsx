@@ -64,7 +64,7 @@ export function WorkflowTimeline({ workflowSteps, activeShipment }: WorkflowTime
           </div>
         </div>
 
-        <PredictionEngine activeShipment={activeShipment} workflowSteps={workflowSteps} />
+        <PredictionEngine key={activeShipment.id} activeShipment={activeShipment} workflowSteps={workflowSteps} />
 
       </CardContent>
     </Card>

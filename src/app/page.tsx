@@ -13,16 +13,15 @@ import type { Shipment } from "@/lib/dashboard-data";
 
 export default function DashboardPage() {
   const [shipments] = useState<Shipment[]>(allShipmentData);
-  const [selectedShipment, setSelectedShipment] = useState<Shipment>(shipments.find(s => s.id === "SH-45892")!);
+  const [selectedShipmentId, setSelectedShipmentId] = useState<string>('SH-45892');
+
+  const selectedShipment = shipments.find(s => s.id === selectedShipmentId)!;
 
   const handleShipmentSelect = (shipmentId: string) => {
-    const newSelectedShipment = shipments.find(s => s.id === shipmentId);
-    if (newSelectedShipment) {
-      setSelectedShipment(newSelectedShipment);
-    }
+    setSelectedShipmentId(shipmentId);
   };
 
-  const tableShipments = shipments.filter(s => s.id !== selectedShipment.id);
+  const tableShipments = shipments.filter(s => s.id !== selectedShipmentId);
 
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col">
