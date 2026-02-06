@@ -12,24 +12,26 @@ import { shipmentDetails as allShipmentData, workflowSteps } from "@/lib/dashboa
 import type { Shipment } from "@/lib/dashboard-data";
 
 export default function DashboardPage() {
-  const [shipments, setShipments] = useState<Shipment[]>(allShipmentData);
-  const [activeShipmentId, setActiveShipmentId] = useState<string>("SH-45892");
+  const [shipments] = useState<Shipment[]>(allShipmentData);
+  const [selectedShipment, setSelectedShipment] = useState<Shipment>(shipments.find(s => s.id === "SH-45892")!);
 
   const handleShipmentSelect = (shipmentId: string) => {
-    setActiveShipmentId(shipmentId);
+    const newSelectedShipment = shipments.find(s => s.id === shipmentId);
+    if (newSelectedShipment) {
+      setSelectedShipment(newSelectedShipment);
+    }
   };
 
-  const activeShipment = shipments.find(s => s.id === activeShipmentId)!;
-  const tableShipments = shipments.filter(s => s.id !== activeShipmentId);
+  const tableShipments = shipments.filter(s => s.id !== selectedShipment.id);
 
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 pb-32">
-        <ActiveShipment shipment={activeShipment} />
+        <ActiveShipment shipment={selectedShipment} />
         <WorkflowTimeline 
           workflowSteps={workflowSteps}
-          activeShipment={activeShipment}
+          activeShipment={selectedShipment}
         />
         <ShipmentsTable 
           shipments={tableShipments}
@@ -38,11 +40,11 @@ export default function DashboardPage() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <SurchargesWidget 
-            daysRemaining={activeShipment.surcharges.daysRemaining}
-            costPerDay={activeShipment.surcharges.costPerDay}
+            daysRemaining={selectedShipment.surcharges.daysRemaining}
+            costPerDay={selectedShipment.surcharges.costPerDay}
           />
           <CrisisRoomWidget 
-            alert={activeShipment.crisis.alert}
+            alert={selectedShipment.crisis.alert}
           />
         </div>
       </main>
