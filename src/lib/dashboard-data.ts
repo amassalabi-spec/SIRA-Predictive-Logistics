@@ -52,6 +52,6 @@ export const crisisData = {
 export const surchargesData = {
     title: "Surestaries",
     daysRemaining: 2,
-    costPerDay: "5000 XOF / Jour",
+    costPerDay: "-2000 MAD / Jour",
     action: "Prioriser avec l'agent SIRA"
 };

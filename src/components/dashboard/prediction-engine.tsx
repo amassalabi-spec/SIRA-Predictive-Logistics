@@ -47,7 +47,7 @@ export function PredictionEngine() {
     <div className="border-t border-white/10 pt-6">
       <div className="flex items-center gap-2 mb-4">
         <Sparkles className="h-5 w-5 text-primary" />
-        <h3 className="font-semibold text-foreground">Prédictions de l'IA</h3>
+        <h3 className="font-semibold text-foreground">Prédictions de SIRA</h3>
       </div>
       
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
