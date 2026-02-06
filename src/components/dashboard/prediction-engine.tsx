@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
-import { predictShipmentTimeline, type PredictShipmentTimelineOutput } from "@/ai/flows/predict-shipment-timeline";
+import { predictShipmentTimeline } from "@/ai/flows/predict-shipment-timeline";
+import type { PredictShipmentTimelineOutput } from "@/ai/schemas/predict-shipment-timeline-schema";
 import { activeShipment, workflowSteps } from "@/lib/dashboard-data";
 import { Sparkles, Bot, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
