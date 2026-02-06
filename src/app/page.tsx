@@ -11,15 +11,7 @@ export default function DashboardPage() {
     <div className="bg-background text-foreground min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1">
-            <ActiveShipment />
-          </div>
-          <div className="lg:col-span-2">
-            {/* This space is intentionally left open for future components or a wider timeline */}
-          </div>
-        </div>
-        
+        <ActiveShipment />
         <WorkflowTimeline />
         <ShipmentsTable />
         

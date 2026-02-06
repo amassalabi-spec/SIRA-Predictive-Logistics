@@ -4,7 +4,7 @@ import { Box, Ship } from "lucide-react";
 
 export function ActiveShipment() {
   return (
-    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white h-full">
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white w-full">
       <CardHeader>
         <CardTitle className="text-lg font-medium text-foreground">Expéditions Actives</CardTitle>
       </CardHeader>
