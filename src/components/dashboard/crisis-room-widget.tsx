@@ -2,7 +2,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SirenIcon } from "@/lib/icons";
 import { crisisData } from "@/lib/dashboard-data";
-import { Send, FileText } from "lucide-react";
 
 export function CrisisRoomWidget() {
   return (
@@ -18,15 +17,23 @@ export function CrisisRoomWidget() {
           </div>
           <p className="text-red-200">{crisisData.alert}</p>
         </div>
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <Button variant="outline" className="border-red-400/50 text-red-200 hover:bg-red-400/10 hover:text-white">
-            <Send className="mr-2 h-4 w-4" />
-            {crisisData.actions[0]}
-          </Button>
-          <Button variant="outline" className="border-red-400/50 text-red-200 hover:bg-red-400/10 hover:text-white">
-            <FileText className="mr-2 h-4 w-4" />
-            {crisisData.actions[1]}
-          </Button>
+        <div className="mt-4 flex flex-col gap-2">
+          {crisisData.actions.map((action, index) => {
+            const Icon = action.icon;
+            return (
+              <Button
+                key={index}
+                variant="outline"
+                className="w-full border-red-400/50 text-red-200 hover:bg-red-400/10 hover:text-white justify-start h-auto p-3 text-left"
+              >
+                <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
+                <div className="flex flex-col">
+                  <span className="font-semibold">{action.title}</span>
+                  <span className="text-xs text-red-200/80">{action.description}</span>
+                </div>
+              </Button>
+            );
+          })}
         </div>
       </CardContent>
     </Card>

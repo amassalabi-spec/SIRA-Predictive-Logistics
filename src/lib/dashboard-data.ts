@@ -1,4 +1,4 @@
-import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search } from 'lucide-react';
+import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export const activeShipment = {
@@ -36,8 +36,16 @@ export const crisisData = {
   title: "Crisis Room",
   alert: "Écart de poids constaté sur le conteneur #C-745-120",
   actions: [
-    "Informer le transitaire",
-    "Rédiger une lettre à la douane"
+    {
+      title: "Informer le transitaire",
+      description: "Envoyer une notification immédiate",
+      icon: Send,
+    },
+    {
+      title: "Rédiger une lettre à la douane",
+      description: "Préparer le document officiel",
+      icon: FileText,
+    },
   ]
 };
 
