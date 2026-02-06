@@ -1,36 +1,72 @@
-import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText, LucideIcon } from 'lucide-react';
 
-export const activeShipment = {
-  name: "Sucre Roux",
-  weight: "100 tonnes",
-  vessel: "MS-PORT GAIA",
-  timeRemaining: "16h 20m",
-  controllingAuthority: "ONSSA - Contrôle Sanitaire",
+export type WorkflowStep = {
+    name: string;
+    icon: LucideIcon;
 };
 
 export const workflowSteps = [
-  { name: "En rade", icon: Anchor, status: "completed" },
-  { name: "A quai", icon: Ship, status: "completed" },
-  { name: "Décharge", icon: Download, status: "completed" },
-  { name: "Stockage", icon: Warehouse, status: "completed" },
-  { name: "Contrôle (IA/Douane)", icon: Search, status: "active" },
-  { name: "Enlèvement", icon: Truck, status: "pending" },
-  { name: "Sortie", icon: CheckCircle, status: "pending" },
+  { name: "En rade", icon: Anchor },
+  { name: "A quai", icon: Ship },
+  { name: "Décharge", icon: Download },
+  { name: "Stockage", icon: Warehouse },
+  { name: "Contrôle (IA/Douane)", icon: Search },
+  { name: "Enlèvement", icon: Truck },
+  { name: "Sortie", icon: CheckCircle },
 ] as const;
 
 export type Shipment = {
-  type: string;
   id: string;
-  status: "En transit" | "Douane" | "Retardé";
+  name: string;
+  hsCode: string;
+  weight: string;
+  vessel: string;
+  timeRemaining: string;
+  controllingAuthority: string;
+  tableStatus: "En transit" | "Douane" | "Retardé";
   icon: LucideIcon;
+  activeWorkflowStepIndex: number;
 };
 
-export const shipments: Shipment[] = [
-  { type: "Documents", id: "SH-64831", status: "En transit", icon: Package },
-  { type: "Ordinateur", id: "SH-97254", status: "Douane", icon: Package },
-  { type: "Produits chimiques", id: "SH-15873", status: "Retardé", icon: Package },
+export const shipmentDetails: Shipment[] = [
+  {
+    id: "SH-45892",
+    name: "Sucre roux de canne",
+    hsCode: "1701.13",
+    weight: "100 tonnes",
+    vessel: "MS-PORT GAIA",
+    timeRemaining: "16h 20m",
+    controllingAuthority: "ONSSA - Contrôle Sanitaire",
+    tableStatus: "En transit",
+    icon: Package,
+    activeWorkflowStepIndex: 4,
+  },
+  {
+    id: "SH-97254",
+    name: "Ordinateurs portables",
+    hsCode: "8471.30",
+    weight: "5 tonnes",
+    vessel: "MSC FLAVIA",
+    timeRemaining: "2h 15m",
+    controllingAuthority: "Douane - Contrôle de Valeur",
+    tableStatus: "Douane",
+    icon: Package,
+    activeWorkflowStepIndex: 2,
+  },
+  {
+    id: "SH-15873",
+    name: "Huiles moteur",
+    hsCode: "2710.19",
+    weight: "20 tonnes",
+    vessel: "CMA CGM A. LINCOLN",
+    timeRemaining: "48h 05m",
+    controllingAuthority: "Ministère de l'Énergie",
+    tableStatus: "Retardé",
+    icon: Package,
+    activeWorkflowStepIndex: 3,
+  },
 ];
+
 
 export const crisisData = {
   title: "Crisis Room",

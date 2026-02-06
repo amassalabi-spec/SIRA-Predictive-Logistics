@@ -4,7 +4,7 @@ import { useEffect, useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { predictShipmentTimeline } from "@/ai/flows/predict-shipment-timeline";
 import type { PredictShipmentTimelineOutput } from "@/ai/schemas/predict-shipment-timeline-schema";
-import { activeShipment, workflowSteps } from "@/lib/dashboard-data";
+import type { Shipment, WorkflowStep } from "@/lib/dashboard-data";
 import { Sparkles, Bot, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -13,13 +13,18 @@ const initialState: {
   error?: string;
 } = {};
 
-export function PredictionEngine() {
+interface PredictionEngineProps {
+  activeShipment: Shipment;
+  workflowSteps: readonly WorkflowStep[];
+}
+
+export function PredictionEngine({ activeShipment, workflowSteps }: PredictionEngineProps) {
   const [state, formAction, isPredicting] = useActionState(
     async () => {
       try {
         const prediction = await predictShipmentTimeline({
           shipmentDetails: `Goods: ${activeShipment.name} (${activeShipment.weight}), Vessel: ${activeShipment.vessel}`,
-          workflowTimeline: `Current stage: ${workflowSteps.find(s => s.status === 'active')?.name}`,
+          workflowTimeline: `Current stage: ${workflowSteps[activeShipment.activeWorkflowStepIndex].name}`,
         });
         return { prediction };
       } catch (e: any) {
