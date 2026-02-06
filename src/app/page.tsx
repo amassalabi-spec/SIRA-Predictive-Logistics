@@ -12,23 +12,24 @@ import { shipmentDetails as allShipmentData, workflowSteps } from "@/lib/dashboa
 import type { Shipment } from "@/lib/dashboard-data";
 
 export default function DashboardPage() {
-  const [shipments] = useState<Shipment[]>(allShipmentData);
-  const [selectedShipmentId, setSelectedShipmentId] = useState<string>('SH-45892');
-
-  const selectedShipment = shipments.find(s => s.id === selectedShipmentId)!;
+  const [selectedShipment, setSelectedShipment] = useState<Shipment>(
+    allShipmentData.find(s => s.id === 'SH-45892')!
+  );
 
   const handleShipmentSelect = (shipmentId: string) => {
-    setSelectedShipmentId(shipmentId);
+    const newSelectedShipment = allShipmentData.find(s => s.id === shipmentId)!;
+    setSelectedShipment(newSelectedShipment);
   };
 
-  const tableShipments = shipments.filter(s => s.id !== selectedShipmentId);
+  const tableShipments = allShipmentData.filter(s => s.id !== selectedShipment.id);
 
   return (
-    <div className="bg-background text-foreground min-h-screen flex flex-col">
+    <div className="bg-background text-foreground min-h-screen flex flex-col pb-32">
       <Header />
-      <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 pb-32">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8">
         <ActiveShipment shipment={selectedShipment} />
         <WorkflowTimeline 
+          key={selectedShipment.id}
           workflowSteps={workflowSteps}
           activeShipment={selectedShipment}
         />
