@@ -1,24 +1,29 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SirenIcon } from "@/lib/icons";
-import { crisisData } from "@/lib/dashboard-data";
+import { crisisActions } from "@/lib/dashboard-data";
 
-export function CrisisRoomWidget() {
+interface CrisisRoomWidgetProps {
+  alert: string;
+}
+
+export function CrisisRoomWidget({ alert }: CrisisRoomWidgetProps) {
   return (
     <Card className="bg-red-900/20 border-2 border-red-500 text-white rounded-xl shadow-lg shadow-red-500/10">
       <CardContent className="p-6 flex flex-col justify-between h-full">
         <div>
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold">{crisisData.title}</h3>
+            <h3 className="text-lg font-semibold">Crisis Room</h3>
             <div className="relative flex h-5 w-5">
               <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping"></span>
+
               <SirenIcon className="relative text-red-400" />
             </div>
           </div>
-          <p className="text-red-200">{crisisData.alert}</p>
+          <p className="text-red-200">{alert}</p>
         </div>
         <div className="mt-4 flex flex-col gap-2">
-          {crisisData.actions.map((action, index) => {
+          {crisisActions.map((action, index) => {
             const Icon = action.icon;
             return (
               <Button

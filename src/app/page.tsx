@@ -37,8 +37,13 @@ export default function DashboardPage() {
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <SurchargesWidget />
-          <CrisisRoomWidget />
+          <SurchargesWidget 
+            daysRemaining={activeShipment.surcharges.daysRemaining}
+            costPerDay={activeShipment.surcharges.costPerDay}
+          />
+          <CrisisRoomWidget 
+            alert={activeShipment.crisis.alert}
+          />
         </div>
       </main>
       <SiraSearchBar />

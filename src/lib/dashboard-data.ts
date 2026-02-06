@@ -1,4 +1,4 @@
-import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText, LucideIcon } from 'lucide-react';
+import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText, LucideIcon, Droplets, Laptop, TestTube2 } from 'lucide-react';
 
 export type WorkflowStep = {
     name: string;
@@ -26,6 +26,13 @@ export type Shipment = {
   tableStatus: "En transit" | "Douane" | "Retardé";
   icon: LucideIcon;
   activeWorkflowStepIndex: number;
+  surcharges: {
+    daysRemaining: number;
+    costPerDay: string;
+  };
+  crisis: {
+    alert: string;
+  };
 };
 
 export const shipmentDetails: Shipment[] = [
@@ -35,43 +42,79 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "1701.13",
     weight: "100 tonnes",
     vessel: "MS-PORT GAIA",
-    timeRemaining: "16h 20m",
+    timeRemaining: "14h 20m",
     controllingAuthority: "ONSSA - Contrôle Sanitaire",
     tableStatus: "En transit",
     icon: Package,
     activeWorkflowStepIndex: 4,
+    surcharges: {
+      daysRemaining: 2,
+      costPerDay: "-5000 MAD / Jour",
+    },
+    crisis: {
+      alert: "Analyse d'humidité requise",
+    },
   },
   {
     id: "SH-97254",
-    name: "Unités de traitement (Ordinateurs)",
-    hsCode: "8471.41",
+    name: "Ordinateurs portables",
+    hsCode: "8471.30",
     weight: "5 tonnes",
     vessel: "MSC FLAVIA",
-    timeRemaining: "2h 15m",
+    timeRemaining: "3h 10m",
     controllingAuthority: "Douane - Contrôle de Valeur",
     tableStatus: "Douane",
-    icon: Package,
+    icon: Laptop,
     activeWorkflowStepIndex: 2,
+    surcharges: {
+      daysRemaining: 5,
+      costPerDay: "-8000 MAD / Jour",
+    },
+    crisis: {
+      alert: "Batteries Lithium non déclarées",
+    },
   },
   {
     id: "SH-15873",
-    name: "Documents de transit",
-    hsCode: "4901.99",
-    weight: "500 kg",
+    name: "Huile moteur",
+    hsCode: "2710.19",
+    weight: "50 tonnes",
     vessel: "CMA CGM A. LINCOLN",
-    timeRemaining: "48h 05m",
-    controllingAuthority: "Douane - Contrôle Documentaire",
+    timeRemaining: "6h 45m",
+    controllingAuthority: "Ministère de l'Énergie",
     tableStatus: "Retardé",
-    icon: FileText,
+    icon: Droplets,
     activeWorkflowStepIndex: 3,
+    surcharges: {
+      daysRemaining: 4,
+      costPerDay: "-3500 MAD / Jour",
+    },
+    crisis: {
+      alert: "Non-conformité des hydrocarbures",
+    },
   },
+  {
+    id: "SH-34567",
+    name: "Vaccins / Pharma",
+    hsCode: "3002.20",
+    weight: "2 tonnes",
+    vessel: "MAERSK EINDHOVEN",
+    timeRemaining: "1h 15m",
+    controllingAuthority: "Ministère de la Santé",
+    tableStatus: "En transit",
+    icon: TestTube2,
+    activeWorkflowStepIndex: 1,
+    surcharges: {
+      daysRemaining: 7,
+      costPerDay: "-12000 MAD / Jour",
+    },
+    crisis: {
+      alert: "Alerte Chaîne du Froid",
+    },
+  }
 ];
 
-
-export const crisisData = {
-  title: "Crisis Room",
-  alert: "Écart de poids constaté sur le conteneur #C-745-120",
-  actions: [
+export const crisisActions = [
     {
       title: "Informer le transitaire",
       description: "Envoyer une notification immédiate",
@@ -82,12 +125,4 @@ export const crisisData = {
       description: "Préparer le document officiel",
       icon: FileText,
     },
-  ]
-};
-
-export const surchargesData = {
-    title: "Surestaries",
-    daysRemaining: 2,
-    costPerDay: "-2000 MAD / Jour",
-    action: "Prioriser avec l'agent SIRA"
-};
+];
