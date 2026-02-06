@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useState, useEffect, useActionState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +23,7 @@ const initialState: {
 
 export function SiraSearchBar() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(
+  const [state, formAction, isPending] = useActionState(
     async (prevState: typeof initialState, formData: FormData) => {
       const query = formData.get("query") as string;
       if (!query) return { ...prevState };
@@ -41,11 +40,9 @@ export function SiraSearchBar() {
 
   const [inputValue, setInputValue] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   
   useEffect(() => {
-    if (state.response || state.error) {
-      setIsSubmitting(false);
+    if (!isPending && (state.response || state.error)) {
       if (state.response) {
         setIsSheetOpen(true);
       }
@@ -57,13 +54,7 @@ export function SiraSearchBar() {
         });
       }
     }
-  }, [state, toast]);
-  
-  const handleFormSubmit = (formData: FormData) => {
-    if (isSubmitting) return;
-    setIsSubmitting(true);
-    formAction(formData);
-  };
+  }, [state, isPending, toast]);
 
   const handleSheetChange = (open: boolean) => {
     setIsSheetOpen(open);
@@ -77,14 +68,14 @@ export function SiraSearchBar() {
     <>
       <footer className="fixed bottom-0 left-0 right-0 p-2 bg-background/90 backdrop-blur-md border-t border-white/10 z-50">
         <div className="container max-w-2xl mx-auto">
-          <form action={handleFormSubmit} className="relative">
+          <form action={formAction} className="relative">
             <Input
               type="text"
               name="query"
               placeholder="Interroger SIRA..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              disabled={isSubmitting}
+              disabled={isPending}
               className="w-full h-11 pl-12 pr-28 rounded-full bg-white/5 border-white/20 text-white placeholder:text-foreground/60 focus:ring-primary focus:ring-2"
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2">
@@ -94,10 +85,10 @@ export function SiraSearchBar() {
               <Button
                 type="submit"
                 size="sm"
-                disabled={isSubmitting || !inputValue}
+                disabled={isPending || !inputValue}
                 className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                {isSubmitting ? <Loader2 className="animate-spin" /> : "Envoyer"}
+                {isPending ? <Loader2 className="animate-spin" /> : "Envoyer"}
               </Button>
             </div>
           </form>
