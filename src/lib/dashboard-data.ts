@@ -1,4 +1,4 @@
-import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle } from 'lucide-react';
+import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export const activeShipment = {
@@ -12,7 +12,8 @@ export const workflowSteps = [
   { name: "En rade", icon: Anchor, status: "completed" },
   { name: "A quai", icon: Ship, status: "completed" },
   { name: "Décharge", icon: Download, status: "completed" },
-  { name: "Stockage", icon: Warehouse, status: "active" },
+  { name: "Stockage", icon: Warehouse, status: "completed" },
+  { name: "Contrôle (IA/Douane)", icon: Search, status: "active" },
   { name: "Enlèvement", icon: Truck, status: "pending" },
   { name: "Sortie", icon: CheckCircle, status: "pending" },
 ] as const;
