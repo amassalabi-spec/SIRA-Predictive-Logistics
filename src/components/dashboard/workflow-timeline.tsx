@@ -5,7 +5,7 @@ import { PredictionEngine } from "./prediction-engine";
 
 export function WorkflowTimeline() {
   return (
-    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white h-full">
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white h-full w-full">
       <CardHeader>
         <CardTitle className="text-lg font-medium text-foreground">Flux de Contrôle</CardTitle>
       </CardHeader>

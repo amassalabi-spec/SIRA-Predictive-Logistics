@@ -16,10 +16,11 @@ export default function DashboardPage() {
             <ActiveShipment />
           </div>
           <div className="lg:col-span-2">
-            <WorkflowTimeline />
+            {/* This space is intentionally left open for future components or a wider timeline */}
           </div>
         </div>
         
+        <WorkflowTimeline />
         <ShipmentsTable />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

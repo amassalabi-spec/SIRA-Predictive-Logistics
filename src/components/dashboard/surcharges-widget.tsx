@@ -12,8 +12,9 @@ export function SurchargesWidget() {
             <h3 className="text-lg font-semibold">{surchargesData.title}</h3>
             <AlertTriangle className="h-5 w-5 text-white/80" />
           </div>
-          <div className="text-5xl font-bold">
-            {surchargesData.daysRemaining} Jours Restants
+          <div className="flex items-baseline gap-2">
+            <span className="text-8xl font-bold">{surchargesData.daysRemaining}</span>
+            <span className="text-2xl font-medium">Jours Restants</span>
           </div>
           <p className="text-white/80">{surchargesData.costPerDay}</p>
         </div>
