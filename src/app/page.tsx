@@ -11,27 +11,46 @@ import { SiraSearchBar } from "@/components/dashboard/sira-search-bar";
 import { shipmentDetails as allShipmentData, workflowSteps } from "@/lib/dashboard-data";
 import type { Shipment } from "@/lib/dashboard-data";
 
+const marchandiseData = {
+  '1701.13': { t: '14h 20m', j: 2, c: "Analyse d'humidité requise", cost: '-5000 MAD / Jour' },
+  '2710.19': { t: '6h 45m', j: 4, c: 'Non-conformité des hydrocarbures', cost: '-3500 MAD / Jour' },
+  '8471.30': { t: '3h 10m', j: 5, c: 'Batteries Lithium non déclarées', cost: '-8000 MAD / Jour' },
+  '3002.20': { t: '1h 15m', j: 7, c: 'Alerte Chaîne du Froid', cost: '-12000 MAD / Jour' }
+};
+
 export default function DashboardPage() {
-  const [selectedShipment, setSelectedShipment] = useState<Shipment>(
-    allShipmentData.find(s => s.id === 'SH-45892')!
-  );
+  const [selectedShipmentId, setSelectedShipmentId] = useState<string>('SH-45892');
 
   const handleShipmentSelect = (shipmentId: string) => {
-    const newSelectedShipment = allShipmentData.find(s => s.id === shipmentId)!;
-    setSelectedShipment(newSelectedShipment);
+    setSelectedShipmentId(shipmentId);
   };
+  
+  const selectedShipment = allShipmentData.find(s => s.id === selectedShipmentId)!;
+  const dynamicData = marchandiseData[selectedShipment.hsCode as keyof typeof marchandiseData];
 
-  const tableShipments = allShipmentData.filter(s => s.id !== selectedShipment.id);
+  const tableShipments = allShipmentData.filter(s => s.id !== selectedShipmentId);
+  
+  const displayShipment: Shipment = {
+      ...selectedShipment,
+      timeRemaining: dynamicData.t,
+      surcharges: {
+          daysRemaining: dynamicData.j,
+          costPerDay: dynamicData.cost,
+      },
+      crisis: {
+          alert: dynamicData.c,
+      }
+  };
 
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col pb-32">
       <Header />
       <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8">
-        <ActiveShipment shipment={selectedShipment} />
+        <ActiveShipment shipment={displayShipment} />
         <WorkflowTimeline 
-          key={selectedShipment.id}
+          key={displayShipment.id}
           workflowSteps={workflowSteps}
-          activeShipment={selectedShipment}
+          activeShipment={displayShipment}
         />
         <ShipmentsTable 
           shipments={tableShipments}
@@ -40,11 +59,11 @@ export default function DashboardPage() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <SurchargesWidget 
-            daysRemaining={selectedShipment.surcharges.daysRemaining}
-            costPerDay={selectedShipment.surcharges.costPerDay}
+            daysRemaining={displayShipment.surcharges.daysRemaining}
+            costPerDay={displayShipment.surcharges.costPerDay}
           />
           <CrisisRoomWidget 
-            alert={selectedShipment.crisis.alert}
+            alert={displayShipment.crisis.alert}
           />
         </div>
       </main>
