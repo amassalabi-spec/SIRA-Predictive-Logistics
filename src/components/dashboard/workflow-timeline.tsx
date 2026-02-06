@@ -31,7 +31,7 @@ export function WorkflowTimeline() {
             {workflowSteps.map((step) => (
               <div key={step.name} className="relative z-10 flex flex-col items-center w-24 text-center">
                 {step.name === 'Contrôle (IA/Douane)' && step.status === 'active' && (
-                  <Badge variant="secondary" className="absolute -top-2 whitespace-nowrap bg-primary/20 text-primary text-xs font-semibold">
+                  <Badge variant="secondary" className="absolute -top-6 whitespace-nowrap bg-primary/20 text-primary text-[0.7rem] font-semibold">
                     Analyse SIRA en cours
                   </Badge>
                 )}
