@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { predictShipmentTimeline } from "@/ai/flows/predict-shipment-timeline";
 import type { PredictShipmentTimelineOutput } from "@/ai/schemas/predict-shipment-timeline-schema";
@@ -15,7 +14,7 @@ const initialState: {
 } = {};
 
 export function PredictionEngine() {
-  const [state, formAction] = useFormState(
+  const [state, formAction, isPredicting] = useActionState(
     async () => {
       try {
         const prediction = await predictShipmentTimeline({
@@ -30,13 +29,7 @@ export function PredictionEngine() {
     initialState
   );
 
-  const [isPredicting, setIsPredicting] = useState(false);
   const { toast } = useToast();
-
-  const handlePrediction = (formData: FormData) => {
-    setIsPredicting(true);
-    formAction(formData);
-  };
 
   useEffect(() => {
     if (state.error) {
@@ -45,10 +38,6 @@ export function PredictionEngine() {
           title: "Prediction Error",
           description: state.error,
       });
-      setIsPredicting(false);
-    }
-    if (state.prediction) {
-        setIsPredicting(false);
     }
   }, [state, toast]);
 
@@ -85,7 +74,7 @@ export function PredictionEngine() {
         )}
 
         {!prediction && (
-          <form action={handlePrediction}>
+          <form action={formAction}>
             <Button 
               type="submit"
               disabled={isPredicting}
