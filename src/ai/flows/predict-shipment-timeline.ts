@@ -40,6 +40,8 @@ const prompt = ai.definePrompt({
 
   Based on the shipment details and current workflow timeline, predict the estimated exit date and time, potential congestion levels, and if the shipment is ready for pickup.
 
+  If the current workflow stage is 'Contrôle (IA/Douane)' or later, the shipment should be considered ready for pickup.
+
   Shipment Details: {{{shipmentDetails}}}
   Workflow Timeline: {{{workflowTimeline}}}
 

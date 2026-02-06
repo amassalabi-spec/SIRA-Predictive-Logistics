@@ -20,7 +20,7 @@ export function WorkflowTimeline() {
       </CardHeader>
       <CardContent className="space-y-8">
         <div>
-          <div className="relative flex justify-between items-start pt-8">
+          <div className="relative flex justify-between items-start pt-9">
             {/* Timeline line */}
             <div className="absolute top-14 left-0 right-0 h-0.5 bg-gray-600 w-full -translate-y-1/2" />
             <div
@@ -37,13 +37,13 @@ export function WorkflowTimeline() {
                 )}
                 <div
                   className={cn(
-                    "flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300",
+                    "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300",
                     step.status === 'active' ? "bg-primary border-primary text-background shadow-[0_0_15px_hsl(var(--primary))]" : 
                     step.status === 'completed' ? "bg-primary/20 border-primary/50 text-primary" :
                     "bg-gray-700/50 border-gray-600 text-foreground/60"
                   )}
                 >
-                  <step.icon className="h-6 w-6" />
+                  <step.icon className="h-5 w-5" />
                 </div>
                 <p className="mt-2 text-xs font-medium h-10 flex items-start justify-center">{step.name}</p>
               </div>

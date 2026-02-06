@@ -8,7 +8,7 @@ export function ActiveShipment() {
       <CardHeader>
         <CardTitle className="text-lg font-medium text-foreground">Expéditions Actives</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col items-center justify-center text-center gap-6 pt-0">
+      <CardContent className="flex flex-col items-center justify-center text-center gap-4 pt-0">
         <div className="space-y-2">
           <div className="flex items-center justify-center gap-2">
             <Box className="h-5 w-5 text-foreground/80" />
@@ -19,11 +19,15 @@ export function ActiveShipment() {
             <p className="text-sm text-foreground/80">{activeShipment.vessel}</p>
           </div>
         </div>
-        <div 
-          className="text-6xl font-bold text-primary"
-          style={{ textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))' }}
-        >
-          {activeShipment.timeRemaining}
+        <div className="flex flex-col items-center">
+          <div 
+            className="text-6xl font-bold text-primary"
+            style={{ textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))' }}
+          >
+            {activeShipment.timeRemaining}
+          </div>
+          <p className="text-xs text-foreground/70 mt-1">Temps écoulé (étape actuelle)</p>
+          <p className="text-sm text-foreground/90 mt-4 font-medium">{activeShipment.controllingAuthority}</p>
         </div>
       </CardContent>
     </Card>

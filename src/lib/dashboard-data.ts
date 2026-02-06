@@ -6,6 +6,7 @@ export const activeShipment = {
   weight: "100 tonnes",
   vessel: "MS-PORT GAIA",
   timeRemaining: "16h 20m",
+  controllingAuthority: "ONSSA - Contrôle Sanitaire",
 };
 
 export const workflowSteps = [
