@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/dashboard/header";
 import { ActiveShipment } from "@/components/dashboard/active-shipment";
 import { WorkflowTimeline } from "@/components/dashboard/workflow-timeline";
@@ -28,21 +28,60 @@ function formatMinutesToHours(minutes: number): string {
 }
 
 export default function DashboardPage() {
-  const [selectedShipmentId, setSelectedShipmentId] = useState<string>('SH-45892');
   const [selectedClientId, setSelectedClientId] = useState<string>('9901');
+
+  // Get the list of shipments available for the currently selected client
+  const availableShipments = allShipmentData.filter(shipment => 
+    clients.find(c => c.id === selectedClientId)?.shipmentIds.includes(shipment.id)
+  );
+
+  const [selectedShipmentId, setSelectedShipmentId] = useState<string>(availableShipments[0].id);
+
+  // When the client changes, update the available shipments and reset the selected shipment to the first one.
+  const handleClientChange = (clientId: string) => {
+    if (clientId) {
+      setSelectedClientId(clientId);
+      const newAvailableShipments = allShipmentData.filter(shipment => 
+        clients.find(c => c.id === clientId)?.shipmentIds.includes(shipment.id)
+      );
+      if (newAvailableShipments.length > 0) {
+        setSelectedShipmentId(newAvailableShipments[0].id);
+      }
+    }
+  };
 
   const handleShipmentSelect = (shipmentId: string) => {
     setSelectedShipmentId(shipmentId);
   };
-
-  const handleClientChange = (clientId: string) => {
-    if (clientId) {
-      setSelectedClientId(clientId);
+  
+  // Safeguard to ensure selectedShipmentId is always valid for the selected client.
+  useEffect(() => {
+    if (!availableShipments.some(s => s.id === selectedShipmentId)) {
+      setSelectedShipmentId(availableShipments[0]?.id);
     }
-  };
+  }, [selectedClientId, selectedShipmentId, availableShipments]);
+
 
   const selectedClient = clients.find(c => c.id === selectedClientId)!;
-  const baseSelectedShipment = allShipmentData.find(s => s.id === selectedShipmentId)!;
+  
+  // Find the full object for the selected shipment. Fallback to first available if not found.
+  const baseSelectedShipment = 
+    availableShipments.find(s => s.id === selectedShipmentId) || availableShipments[0];
+
+  // If baseSelectedShipment is null (e.g., client has no shipments), we need to handle this.
+  if (!baseSelectedShipment) {
+    // You can render a loading state or an empty state here
+    return (
+      <div className="bg-background text-foreground min-h-screen flex flex-col items-center justify-center">
+        <Header />
+        <main className="flex-1 text-center">
+          <ClientSelector selectedClientId={selectedClientId} onClientChange={handleClientChange} />
+          <p className="mt-8">Ce client n'a pas d'expéditions en cours.</p>
+        </main>
+        <SiraSearchBar />
+      </div>
+    )
+  }
 
   // Create a derived shipment object with calculated times
   const displayedShipment = {
@@ -51,7 +90,7 @@ export default function DashboardPage() {
       totalTimeRemaining: `Prêt dans ${formatMinutesToHours(baseSelectedShipment.baseTotalTimeRemainingMinutes * selectedClient.timeMultiplier)}`,
   };
 
-  const tableShipments = allShipmentData.filter(s => s.id !== selectedShipmentId);
+  const tableShipments = availableShipments.filter(s => s.id !== selectedShipmentId);
   
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col pb-32">

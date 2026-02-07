@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 interface SurchargesWidgetProps {
   daysRemaining: number;
@@ -11,11 +12,18 @@ interface SurchargesWidgetProps {
 export function SurchargesWidget({ daysRemaining, costPerDay }: SurchargesWidgetProps) {
   return (
     <Card className={cn(
-      "relative overflow-hidden text-white rounded-xl shadow-lg",
+      "relative overflow-hidden text-white rounded-xl shadow-lg transition-colors duration-300",
       daysRemaining <= 2
         ? "bg-gradient-to-br from-red-600 to-rose-800"
-        : "bg-gradient-to-br from-amber-500 to-orange-600"
+        : "bg-gradient-to-br from-green-600 to-teal-800"
     )}>
+      {daysRemaining <= 2 && (
+        <div className="absolute top-4 right-4 z-20">
+            <Badge variant="destructive" className="animate-pulse text-base font-bold py-1 px-3 border-2 border-white/50">
+                URGENT
+            </Badge>
+        </div>
+      )}
       <CardContent className="p-6 relative z-10 flex flex-col justify-between h-full">
         <div>
           <div className="flex items-center justify-between mb-2">

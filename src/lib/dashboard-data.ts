@@ -1,4 +1,4 @@
-import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Droplets, Laptop, FileText, LucideIcon } from 'lucide-react';
+import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Droplets, Laptop, FileText, LucideIcon, Wrench, Syringe, Beaker } from 'lucide-react';
 
 export type WorkflowStep = {
     name: string;
@@ -94,7 +94,7 @@ export const shipmentDetails: Shipment[] = [
     ],
     fallbackPredictionHours: 6.75,
   },
-    {
+  {
     id: "SH-97254",
     name: "Ordinateurs portables",
     hsCode: "8471.30",
@@ -109,7 +109,7 @@ export const shipmentDetails: Shipment[] = [
     icon: Laptop,
     activeWorkflowStepIndex: 4,
     surcharges: {
-      daysRemaining: 2,
+      daysRemaining: 5,
       costPerDay: "-8000 MAD / Jour",
     },
     checklist: [
@@ -144,4 +144,79 @@ export const shipmentDetails: Shipment[] = [
     ],
     fallbackPredictionHours: 0.75,
   },
+  {
+    id: "SH-PARTS-01",
+    name: "Pièces Détachées Auto",
+    hsCode: "8708.99",
+    weight: "2 tonnes",
+    vessel: "MAERSK HANOI",
+    baseTimeRemainingMinutes: 150,
+    baseTotalTimeRemainingMinutes: 280,
+    currentStepDescription: "Inspection Douanière",
+    controllingAuthority: "Douane - Contrôle Technique",
+    agencyShortName: "DOUANE",
+    tableStatus: "Douane",
+    icon: Wrench,
+    activeWorkflowStepIndex: 4,
+    surcharges: {
+      daysRemaining: 3,
+      costPerDay: "-4000 MAD / Jour",
+    },
+    checklist: [
+      { text: "Vérification numéros de série", status: 'completed' },
+      { text: "Certificat de conformité", status: 'action-required' },
+      { text: "Paiement des droits", status: 'pending' },
+    ],
+    fallbackPredictionHours: 4.5,
+  },
+  {
+    id: "SH-VAC-01",
+    name: "Vaccins",
+    hsCode: "3002.20",
+    weight: "500 kg",
+    vessel: "CMA CGM PALAIS ROYAL",
+    baseTimeRemainingMinutes: 90,
+    baseTotalTimeRemainingMinutes: 200, // 3h 20m
+    currentStepDescription: "Contrôle Chaîne du Froid",
+    controllingAuthority: "Ministère de la Santé",
+    agencyShortName: "MINSANTE",
+    tableStatus: "Douane",
+    icon: Syringe,
+    activeWorkflowStepIndex: 4,
+    surcharges: {
+      daysRemaining: 1,
+      costPerDay: "-12000 MAD / Jour",
+    },
+    checklist: [
+      { text: "Contrôle de température", status: 'completed' },
+      { text: "Alerte Chaîne du Froid", status: 'action-required' },
+      { text: "Autorisation de distribution", status: 'pending' },
+    ],
+    fallbackPredictionHours: 3.3,
+  },
+  {
+    id: "SH-CHEM-01",
+    name: "Produits Chimiques",
+    hsCode: "3824.99",
+    weight: "10 tonnes",
+    vessel: "MSC LEO",
+    baseTimeRemainingMinutes: 600,
+    baseTotalTimeRemainingMinutes: 900,
+    currentStepDescription: "Analyse de dangerosité",
+    controllingAuthority: "Protection Civile",
+    agencyShortName: "PROTCIV",
+    tableStatus: "Retardé",
+    icon: Beaker,
+    activeWorkflowStepIndex: 2,
+    surcharges: {
+      daysRemaining: 2,
+      costPerDay: "-9500 MAD / Jour",
+    },
+    checklist: [
+      { text: "Fiche de données de sécurité (FDS)", status: 'completed' },
+      { text: "Confinement et stockage", status: 'action-required' },
+      { text: "Permis d'importation", status: 'pending' },
+    ],
+    fallbackPredictionHours: 15,
+  }
 ];

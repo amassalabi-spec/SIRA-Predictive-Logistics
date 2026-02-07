@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, AlertTriangle, ClipboardList } from "lucide-react";
 import type { ChecklistItem } from "@/lib/dashboard-data";
+import { cn } from "@/lib/utils";
 
 const complianceStepConfig = {
   completed: {
@@ -22,8 +23,13 @@ interface CrisisRoomWidgetProps {
 }
 
 export function CrisisRoomWidget({ checklist }: CrisisRoomWidgetProps) {
+  const hasActionRequired = checklist.some(item => item.status === 'action-required');
+
   return (
-    <Card className="bg-sky-900/30 backdrop-blur-xl border border-white/10 text-white">
+    <Card className={cn(
+      "backdrop-blur-xl border border-white/10 text-white transition-colors duration-300",
+      hasActionRequired ? "bg-amber-900/40" : "bg-sky-900/30"
+    )}>
       <CardHeader>
         <CardTitle className="text-lg font-medium text-foreground">Check-list de Conformité SIRA</CardTitle>
       </CardHeader>
