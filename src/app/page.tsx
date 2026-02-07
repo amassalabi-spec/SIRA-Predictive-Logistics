@@ -70,10 +70,9 @@ export default function DashboardPage() {
 
   // If baseSelectedShipment is null (e.g., client has no shipments), we need to handle this.
   if (!baseSelectedShipment) {
-    // You can render a loading state or an empty state here
     return (
       <div className="bg-background text-foreground min-h-screen flex flex-col items-center justify-center">
-        <Header />
+        <Header clientName={selectedClient?.name ?? 'No Client'}/>
         <main className="flex-1 text-center">
           <ClientSelector selectedClientId={selectedClientId} onClientChange={handleClientChange} />
           <p className="mt-8">Ce client n'a pas d'expéditions en cours.</p>
@@ -94,7 +93,7 @@ export default function DashboardPage() {
   
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col pb-32">
-      <Header />
+      <Header clientName={selectedClient.name}/>
       <main className="flex-1 space-y-8">
         <ClientSelector selectedClientId={selectedClientId} onClientChange={handleClientChange} />
         <div className="px-4 sm:px-6 lg:px-8 space-y-8">

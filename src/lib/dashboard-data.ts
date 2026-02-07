@@ -67,7 +67,7 @@ export const shipmentDetails: Shipment[] = [
       { text: "Analyse microbiologique", status: 'action-required' },
       { text: "Certificat sanitaire", status: 'pending' },
     ],
-    fallbackPredictionHours: 14,
+    fallbackPredictionHours: 26,
   },
   {
     id: "SH-15873",
@@ -109,7 +109,7 @@ export const shipmentDetails: Shipment[] = [
     icon: Laptop,
     activeWorkflowStepIndex: 4,
     surcharges: {
-      daysRemaining: 5,
+      daysRemaining: 2,
       costPerDay: "-8000 MAD / Jour",
     },
     checklist: [
@@ -135,7 +135,7 @@ export const shipmentDetails: Shipment[] = [
     activeWorkflowStepIndex: 5,
     surcharges: {
       daysRemaining: 1,
-      costPerDay: "0 MAD / Jour",
+      costPerDay: "-500 MAD / Jour",
     },
     checklist: [
         { text: "Vérification signature", status: 'completed' },
