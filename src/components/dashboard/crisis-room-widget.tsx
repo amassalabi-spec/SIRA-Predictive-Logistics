@@ -1,45 +1,42 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { SirenIcon } from "@/lib/icons";
-import { crisisActions } from "@/lib/dashboard-data";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, AlertTriangle, ClipboardList } from "lucide-react";
 
-interface CrisisRoomWidgetProps {
-  alert: string;
-}
+const complianceSteps = [
+  {
+    text: "Documents PortNet validés.",
+    icon: CheckCircle,
+    color: "text-green-400",
+  },
+  {
+    text: "Action requise : Télécharger le certificat d'origine.",
+    icon: AlertTriangle,
+    color: "text-yellow-400",
+  },
+  {
+    text: "En attente : Inspection physique programmée",
+    icon: ClipboardList,
+    color: "text-blue-400",
+  },
+];
 
-export function CrisisRoomWidget({ alert }: CrisisRoomWidgetProps) {
+export function CrisisRoomWidget() {
   return (
-    <Card className="bg-red-900/20 border-2 border-red-500 text-white rounded-xl shadow-lg shadow-red-500/10">
-      <CardContent className="p-6 flex flex-col justify-between h-full">
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold">Crisis Room</h3>
-            <div className="relative flex h-5 w-5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping"></span>
-
-              <SirenIcon className="relative text-red-400" />
-            </div>
-          </div>
-          <p className="text-red-200">{alert}</p>
-        </div>
-        <div className="mt-4 flex flex-col gap-2">
-          {crisisActions.map((action, index) => {
-            const Icon = action.icon;
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white">
+      <CardHeader>
+        <CardTitle className="text-lg font-medium text-foreground">Check-list de Conformité SIRA</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-4 pt-2">
+          {complianceSteps.map((step, index) => {
+            const Icon = step.icon;
             return (
-              <Button
-                key={index}
-                variant="outline"
-                className="w-full border-red-400/50 text-red-200 hover:bg-red-400/10 hover:text-white justify-start h-auto p-3 text-left"
-              >
-                <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
-                <div className="flex flex-col">
-                  <span className="font-semibold">{action.title}</span>
-                  <span className="text-xs text-red-200/80">{action.description}</span>
-                </div>
-              </Button>
+              <li key={index} className="flex items-start gap-3">
+                <Icon className={`h-5 w-5 mt-0.5 flex-shrink-0 ${step.color}`} />
+                <span className="text-foreground/90">{step.text}</span>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </CardContent>
     </Card>
   );

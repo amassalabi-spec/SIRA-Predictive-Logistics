@@ -9,6 +9,7 @@ import { SurchargesWidget } from "@/components/dashboard/surcharges-widget";
 import { CrisisRoomWidget } from "@/components/dashboard/crisis-room-widget";
 import { SiraSearchBar } from "@/components/dashboard/sira-search-bar";
 import { shipmentDetails as allShipmentData, workflowSteps } from "@/lib/dashboard-data";
+import type { Shipment } from "@/lib/dashboard-data";
 
 export default function DashboardPage() {
   const [selectedShipmentId, setSelectedShipmentId] = useState<string>('SH-45892');
@@ -41,9 +42,7 @@ export default function DashboardPage() {
             daysRemaining={selectedShipment.surcharges.daysRemaining}
             costPerDay={selectedShipment.surcharges.costPerDay}
           />
-          <CrisisRoomWidget 
-            alert={selectedShipment.crisis.alert}
-          />
+          <CrisisRoomWidget />
         </div>
       </main>
       <SiraSearchBar />
