@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useActionState } from "react";
@@ -14,17 +15,19 @@ const initialState: {
 } = {};
 
 interface PredictionEngineProps {
-  activeShipment: Shipment;
+  activeShipment: Shipment & { timeRemaining: string, totalTimeRemaining: string };
   workflowSteps: readonly WorkflowStep[];
+  clientTimeMultiplier: number;
 }
 
-export function PredictionEngine({ activeShipment, workflowSteps }: PredictionEngineProps) {
+export function PredictionEngine({ activeShipment, workflowSteps, clientTimeMultiplier }: PredictionEngineProps) {
   const [state, formAction, isPredicting] = useActionState(
     async () => {
       try {
         const prediction = await predictShipmentTimeline({
           shipmentDetails: `Goods: ${activeShipment.name} (${activeShipment.weight}), Vessel: ${activeShipment.vessel}`,
           workflowTimeline: `Current stage: ${workflowSteps[activeShipment.activeWorkflowStepIndex].name}`,
+          clientTimeMultiplier: clientTimeMultiplier,
         });
         return { prediction };
       } catch (e: any) {

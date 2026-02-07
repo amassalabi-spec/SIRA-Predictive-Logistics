@@ -1,3 +1,4 @@
+
 import { z } from 'zod';
 
 export const PredictShipmentTimelineInputSchema = z.object({
@@ -7,6 +8,10 @@ export const PredictShipmentTimelineInputSchema = z.object({
   workflowTimeline: z
     .string()
     .describe('Current status of the shipment in the workflow timeline.'),
+  clientTimeMultiplier: z
+    .number()
+    .describe('A multiplier based on client history. 1.0 is a reliable client, > 1.0 is a riskier client.')
+    .optional(),
 });
 export type PredictShipmentTimelineInput = z.infer<typeof PredictShipmentTimelineInputSchema>;
 

@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { PredictionEngine } from "./prediction-engine";
@@ -6,10 +7,11 @@ import type { Shipment, WorkflowStep } from "@/lib/dashboard-data";
 
 interface WorkflowTimelineProps {
   workflowSteps: readonly WorkflowStep[];
-  activeShipment: Shipment;
+  activeShipment: Shipment & { timeRemaining: string, totalTimeRemaining: string };
+  clientTimeMultiplier: number;
 }
 
-export function WorkflowTimeline({ workflowSteps, activeShipment }: WorkflowTimelineProps) {
+export function WorkflowTimeline({ workflowSteps, activeShipment, clientTimeMultiplier }: WorkflowTimelineProps) {
   const activeStepIndex = activeShipment.activeWorkflowStepIndex;
   
   const getStatus = (index: number) => {
@@ -64,7 +66,7 @@ export function WorkflowTimeline({ workflowSteps, activeShipment }: WorkflowTime
           </div>
         </div>
 
-        <PredictionEngine key={activeShipment.id} activeShipment={activeShipment} workflowSteps={workflowSteps} />
+        <PredictionEngine activeShipment={activeShipment} workflowSteps={workflowSteps} clientTimeMultiplier={clientTimeMultiplier} />
 
       </CardContent>
     </Card>

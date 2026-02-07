@@ -26,8 +26,8 @@ export type Shipment = {
   hsCode: string;
   weight: string;
   vessel: string;
-  timeRemaining: string;
-  totalTimeRemaining: string;
+  baseTimeRemainingMinutes: number;
+  baseTotalTimeRemainingMinutes: number;
   currentStepDescription: string;
   controllingAuthority: string;
   agencyShortName: string;
@@ -49,22 +49,22 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "1701.13",
     weight: "100 tonnes",
     vessel: "MS-PORT GAIA",
-    timeRemaining: "18h 45m",
-    totalTimeRemaining: "Prêt dans 26h 20m", // Longest time
-    currentStepDescription: "Mise à quai",
-    controllingAuthority: "Capitainerie",
-    agencyShortName: "PORT",
+    baseTimeRemainingMinutes: 1125, // 18h 45m
+    baseTotalTimeRemainingMinutes: 1580, // 26h 20m
+    currentStepDescription: "Analyse Labo ONSSA",
+    controllingAuthority: "Office National de Sécurité Sanitaire des Produits Alimentaires",
+    agencyShortName: "ONSSA",
     tableStatus: "En transit",
     icon: Package,
-    activeWorkflowStepIndex: 1, // Earliest stage
+    activeWorkflowStepIndex: 1,
     surcharges: {
-      daysRemaining: 7, // Max days
+      daysRemaining: 7,
       costPerDay: "-5000 MAD / Jour",
     },
     checklist: [
-      { text: "Documents PortNet validés", status: "completed" },
-      { text: "Plan de déchargement", status: "action-required" },
-      { text: "Inspection coque", status: "pending" },
+      { text: "Prélèvement échantillon", status: 'completed' },
+      { text: "Analyse microbiologique", status: 'action-required' },
+      { text: "Certificat sanitaire", status: 'pending' },
     ]
   },
   {
@@ -73,22 +73,22 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "2710.19",
     weight: "50 tonnes",
     vessel: "CMA CGM A. LINCOLN",
-    timeRemaining: "4h 20m",
-    totalTimeRemaining: "Prêt dans 6h 45m",
-    currentStepDescription: "Mise en Stockage",
-    controllingAuthority: "Opérateur Terminal",
-    agencyShortName: "TERMINAL",
+    baseTimeRemainingMinutes: 260, // 4h 20m
+    baseTotalTimeRemainingMinutes: 405, // 6h 45m
+    currentStepDescription: "Vérification Conformité",
+    controllingAuthority: "Ministère du Commerce et de l'Industrie",
+    agencyShortName: "DOUANE",
     tableStatus: "En transit",
     icon: Droplets,
-    activeWorkflowStepIndex: 3, // Mid stage
+    activeWorkflowStepIndex: 3,
     surcharges: {
       daysRemaining: 4,
       costPerDay: "-3500 MAD / Jour",
     },
     checklist: [
-      { text: "Vérification viscosité", status: "completed" },
-      { text: "Origine pétrolière", status: "action-required" },
-      { text: "Mainlevée", status: "pending" },
+        { text: "Vérification viscosité", status: 'completed' },
+        { text: "Origine pétrolière", status: 'action-required' },
+        { text: "Mainlevée", status: 'pending' },
     ]
   },
     {
@@ -97,22 +97,22 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "8471.30",
     weight: "5 tonnes",
     vessel: "MSC FLAVIA",
-    timeRemaining: "1h 15m",
-    totalTimeRemaining: "Prêt dans 3h 10m",
+    baseTimeRemainingMinutes: 75, // 1h 15m
+    baseTotalTimeRemainingMinutes: 190, // 3h 10m
     currentStepDescription: "Passage au Scanner",
     controllingAuthority: "Douane - Contrôle de Valeur",
     agencyShortName: "DOUANE",
     tableStatus: "Douane",
     icon: Laptop,
-    activeWorkflowStepIndex: 4, // Late-mid stage
+    activeWorkflowStepIndex: 4,
     surcharges: {
-      daysRemaining: 2, // Fewer days
+      daysRemaining: 5,
       costPerDay: "-8000 MAD / Jour",
     },
     checklist: [
-      { text: "Scanner Rayons-X", status: "completed" },
-      { text: "Inventaire Batteries", status: "action-required" },
-      { text: "Taxation", status: "pending" },
+        { text: "Scanner Rayons-X", status: 'completed' },
+        { text: "Inventaire Batteries", status: 'action-required' },
+        { text: "Taxation", status: 'pending' },
     ]
   },
   {
@@ -121,22 +121,22 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "4901.99",
     weight: "1 kg",
     vessel: "N/A",
-    timeRemaining: "15min",
-    totalTimeRemaining: "Prêt dans 45min", // Shortest time
-    currentStepDescription: "Prêt pour enlèvement",
-    controllingAuthority: "Agent Maritime",
+    baseTimeRemainingMinutes: 15, // 15min
+    baseTotalTimeRemainingMinutes: 45, // 45min
+    currentStepDescription: "Validation Signature",
+    controllingAuthority: "PortNet",
     agencyShortName: "AGENT",
     tableStatus: "En transit",
     icon: FileText,
-    activeWorkflowStepIndex: 5, // Latest stage
+    activeWorkflowStepIndex: 5,
     surcharges: {
-      daysRemaining: 1, // Almost expired
+      daysRemaining: 1,
       costPerDay: "0 MAD / Jour",
     },
     checklist: [
-      { text: "Vérification signature", status: "completed" },
-      { text: "Cachet agent", status: "completed" },
-      { text: "Archivage", status: "action-required" },
+        { text: "Vérification signature", status: 'completed' },
+        { text: "Cachet agent", status: 'action-required' },
+        { text: "Archivage", status: 'pending' },
     ]
   },
 ];
