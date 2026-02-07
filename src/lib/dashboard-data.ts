@@ -1,4 +1,4 @@
-import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText, LucideIcon, Droplets, Laptop, TestTube2 } from 'lucide-react';
+import { Package, Anchor, Ship, Download, Warehouse, Truck, CheckCircle, Search, Send, FileText, LucideIcon, Droplets, Laptop } from 'lucide-react';
 
 export type WorkflowStep = {
     name: string;
@@ -22,6 +22,8 @@ export type Shipment = {
   weight: string;
   vessel: string;
   timeRemaining: string;
+  totalTimeRemaining: string;
+  currentStepDescription: string;
   controllingAuthority: string;
   tableStatus: "En transit" | "Douane" | "Retardé";
   icon: LucideIcon;
@@ -42,7 +44,9 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "1701.13",
     weight: "100 tonnes",
     vessel: "MS-PORT GAIA",
-    timeRemaining: "14h 20m",
+    timeRemaining: "18h 45m",
+    totalTimeRemaining: "Prêt dans 26h 20m",
+    currentStepDescription: "Analyse Labo ONSSA",
     controllingAuthority: "ONSSA - Contrôle Sanitaire",
     tableStatus: "En transit",
     icon: Package,
@@ -61,7 +65,9 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "8471.30",
     weight: "5 tonnes",
     vessel: "MSC FLAVIA",
-    timeRemaining: "3h 10m",
+    timeRemaining: "1h 15m",
+    totalTimeRemaining: "Prêt dans 4h 30m",
+    currentStepDescription: "Passage au Scanner",
     controllingAuthority: "Douane - Contrôle de Valeur",
     tableStatus: "Douane",
     icon: Laptop,
@@ -80,7 +86,9 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "2710.19",
     weight: "50 tonnes",
     vessel: "CMA CGM A. LINCOLN",
-    timeRemaining: "6h 45m",
+    timeRemaining: "4h 20m",
+    totalTimeRemaining: "Prêt dans 8h",
+    currentStepDescription: "Vérification Conformité",
     controllingAuthority: "Ministère de l'Énergie",
     tableStatus: "Retardé",
     icon: Droplets,
@@ -94,24 +102,26 @@ export const shipmentDetails: Shipment[] = [
     },
   },
   {
-    id: "SH-34567",
-    name: "Vaccins / Pharma",
-    hsCode: "3002.20",
-    weight: "2 tonnes",
-    vessel: "MAERSK EINDHOVEN",
-    timeRemaining: "1h 15m",
-    controllingAuthority: "Ministère de la Santé",
+    id: "SH-DOC-01",
+    name: "Documents de transit",
+    hsCode: "4901.99",
+    weight: "1 kg",
+    vessel: "N/A",
+    timeRemaining: "15min",
+    totalTimeRemaining: "Prêt dans 45min",
+    currentStepDescription: "Validation Signature",
+    controllingAuthority: "Douane",
     tableStatus: "En transit",
-    icon: TestTube2,
+    icon: FileText,
     activeWorkflowStepIndex: 1,
     surcharges: {
-      daysRemaining: 7,
-      costPerDay: "-12000 MAD / Jour",
+      daysRemaining: 0,
+      costPerDay: "0 MAD / Jour",
     },
     crisis: {
-      alert: "Alerte Chaîne du Froid",
+      alert: "Signature manquante",
     },
-  }
+  },
 ];
 
 export const crisisActions = [

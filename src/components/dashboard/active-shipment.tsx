@@ -28,10 +28,12 @@ export function ActiveShipment({ shipment }: ActiveShipmentProps) {
             className="text-6xl font-bold text-primary"
             style={{ textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))' }}
           >
-            {shipment.timeRemaining}
+            {shipment.totalTimeRemaining}
           </div>
-          <p className="text-xs text-foreground/70 mt-1">Temps écoulé (étape actuelle)</p>
-          <p className="text-sm text-foreground/90 mt-4 font-medium">{shipment.controllingAuthority}</p>
+          <p className="text-xs text-foreground/70 mt-1">Temps Restant Global</p>
+          <div className="text-sm text-foreground/90 mt-4 font-medium">
+            En cours : {shipment.currentStepDescription} | Temps : {shipment.timeRemaining}
+          </div>
         </div>
       </CardContent>
     </Card>
