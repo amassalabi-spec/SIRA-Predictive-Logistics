@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, TrendingUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SurchargesWidgetProps {
   daysRemaining: number;
@@ -9,7 +10,12 @@ interface SurchargesWidgetProps {
 
 export function SurchargesWidget({ daysRemaining, costPerDay }: SurchargesWidgetProps) {
   return (
-    <Card className="relative overflow-hidden bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-xl shadow-lg">
+    <Card className={cn(
+      "relative overflow-hidden text-white rounded-xl shadow-lg",
+      daysRemaining <= 2
+        ? "bg-gradient-to-br from-red-600 to-rose-800"
+        : "bg-gradient-to-br from-amber-500 to-orange-600"
+    )}>
       <CardContent className="p-6 relative z-10 flex flex-col justify-between h-full">
         <div>
           <div className="flex items-center justify-between mb-2">

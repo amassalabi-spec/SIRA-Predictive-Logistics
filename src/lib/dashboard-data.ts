@@ -26,8 +26,8 @@ export type Shipment = {
   hsCode: string;
   weight: string;
   vessel: string;
-  baseTimeRemainingMinutes: number;
-  baseTotalTimeRemainingMinutes: number;
+  baseTimeRemainingMinutes: number; // For the current step
+  baseTotalTimeRemainingMinutes: number; // For the whole process
   currentStepDescription: string;
   controllingAuthority: string;
   agencyShortName: string;
@@ -109,7 +109,7 @@ export const shipmentDetails: Shipment[] = [
     icon: Laptop,
     activeWorkflowStepIndex: 4,
     surcharges: {
-      daysRemaining: 5,
+      daysRemaining: 2,
       costPerDay: "-8000 MAD / Jour",
     },
     checklist: [

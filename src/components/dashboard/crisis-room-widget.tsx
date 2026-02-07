@@ -23,7 +23,7 @@ interface CrisisRoomWidgetProps {
 
 export function CrisisRoomWidget({ checklist }: CrisisRoomWidgetProps) {
   return (
-    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white">
+    <Card className="bg-sky-900/30 backdrop-blur-xl border border-white/10 text-white">
       <CardHeader>
         <CardTitle className="text-lg font-medium text-foreground">Check-list de Conformité SIRA</CardTitle>
       </CardHeader>
