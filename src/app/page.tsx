@@ -42,7 +42,7 @@ export default function DashboardPage() {
             daysRemaining={selectedShipment.surcharges.daysRemaining}
             costPerDay={selectedShipment.surcharges.costPerDay}
           />
-          <CrisisRoomWidget />
+          <CrisisRoomWidget checklist={selectedShipment.checklist} />
         </div>
       </main>
       <SiraSearchBar />

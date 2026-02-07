@@ -15,6 +15,11 @@ export const workflowSteps = [
   { name: "Sortie", icon: CheckCircle },
 ] as const;
 
+export type ChecklistItem = {
+  text: string;
+  status: 'completed' | 'action-required' | 'pending';
+};
+
 export type Shipment = {
   id: string;
   name: string;
@@ -25,6 +30,7 @@ export type Shipment = {
   totalTimeRemaining: string;
   currentStepDescription: string;
   controllingAuthority: string;
+  agencyShortName: string;
   tableStatus: "En transit" | "Douane" | "Retardé";
   icon: LucideIcon;
   activeWorkflowStepIndex: number;
@@ -32,6 +38,7 @@ export type Shipment = {
     daysRemaining: number;
     costPerDay: string;
   };
+  checklist: readonly ChecklistItem[];
 };
 
 export const shipmentDetails: Shipment[] = [
@@ -45,6 +52,7 @@ export const shipmentDetails: Shipment[] = [
     totalTimeRemaining: "Prêt dans 26h 20m",
     currentStepDescription: "Analyse Labo ONSSA",
     controllingAuthority: "ONSSA - Contrôle Sanitaire",
+    agencyShortName: "ONSSA",
     tableStatus: "En transit",
     icon: Package,
     activeWorkflowStepIndex: 4,
@@ -52,6 +60,11 @@ export const shipmentDetails: Shipment[] = [
       daysRemaining: 2,
       costPerDay: "-5000 MAD / Jour",
     },
+    checklist: [
+      { text: "Prélèvement échantillon", status: "completed" },
+      { text: "Analyse microbiologique", status: "action-required" },
+      { text: "Certificat sanitaire", status: "pending" },
+    ]
   },
   {
     id: "SH-97254",
@@ -63,6 +76,7 @@ export const shipmentDetails: Shipment[] = [
     totalTimeRemaining: "Prêt dans 3h 10m",
     currentStepDescription: "Passage au Scanner",
     controllingAuthority: "Douane - Contrôle de Valeur",
+    agencyShortName: "DOUANE",
     tableStatus: "Douane",
     icon: Laptop,
     activeWorkflowStepIndex: 2,
@@ -70,6 +84,11 @@ export const shipmentDetails: Shipment[] = [
       daysRemaining: 5,
       costPerDay: "-8000 MAD / Jour",
     },
+    checklist: [
+      { text: "Scanner Rayons-X", status: "completed" },
+      { text: "Inventaire Batteries", status: "action-required" },
+      { text: "Taxation", status: "pending" },
+    ]
   },
   {
     id: "SH-15873",
@@ -80,7 +99,8 @@ export const shipmentDetails: Shipment[] = [
     timeRemaining: "4h 20m",
     totalTimeRemaining: "Prêt dans 6h 45m",
     currentStepDescription: "Vérification Conformité",
-    controllingAuthority: "Ministère de l'Énergie",
+    controllingAuthority: "Ministère de l'Industrie et du Commerce",
+    agencyShortName: "MCI/DOUANE",
     tableStatus: "Retardé",
     icon: Droplets,
     activeWorkflowStepIndex: 3,
@@ -88,6 +108,11 @@ export const shipmentDetails: Shipment[] = [
       daysRemaining: 4,
       costPerDay: "-3500 MAD / Jour",
     },
+    checklist: [
+      { text: "Vérification viscosité", status: "completed" },
+      { text: "Origine pétrolière", status: "action-required" },
+      { text: "Mainlevée", status: "pending" },
+    ]
   },
   {
     id: "SH-DOC-01",
@@ -98,7 +123,8 @@ export const shipmentDetails: Shipment[] = [
     timeRemaining: "15min",
     totalTimeRemaining: "Prêt dans 45min",
     currentStepDescription: "Validation Signature",
-    controllingAuthority: "Douane",
+    controllingAuthority: "PortNet / Douane",
+    agencyShortName: "PORTNET",
     tableStatus: "En transit",
     icon: FileText,
     activeWorkflowStepIndex: 1,
@@ -106,5 +132,10 @@ export const shipmentDetails: Shipment[] = [
       daysRemaining: 0,
       costPerDay: "0 MAD / Jour",
     },
+    checklist: [
+      { text: "Vérification signature", status: "completed" },
+      { text: "Cachet agent", status: "action-required" },
+      { text: "Archivage", status: "pending" },
+    ]
   },
 ];

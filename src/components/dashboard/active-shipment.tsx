@@ -31,8 +31,14 @@ export function ActiveShipment({ shipment }: ActiveShipmentProps) {
             {shipment.totalTimeRemaining}
           </div>
           <p className="text-xs text-foreground/70 mt-1">Temps Restant Global</p>
-          <div className="text-sm text-foreground/90 mt-4 font-medium">
-            En cours : {shipment.currentStepDescription} | Temps : {shipment.timeRemaining}
+          <div className="text-center mt-4 space-y-1">
+            <p className="text-sm uppercase font-bold tracking-wider text-foreground/80">
+              CONTRÔLE : {shipment.agencyShortName}
+            </p>
+            <p className="text-base text-foreground/90">
+              {shipment.currentStepDescription} | Temps : 
+              <span className="font-bold text-amber-400 ml-1">{shipment.timeRemaining}</span>
+            </p>
           </div>
         </div>
       </CardContent>
