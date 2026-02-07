@@ -13,14 +13,14 @@ export function Header() {
           <ShipWheel className="h-7 w-7 text-primary" />
           <h1 className="text-xl font-bold tracking-tight text-white">PortNet Vision AI</h1>
         </div>
-        <nav className="flex items-center gap-6">
-          <Button variant="ghost" className="text-foreground/80 hover:text-white">Configuration</Button>
-          <Button variant="ghost" className="text-foreground/80 hover:text-white">Mission</Button>
-          <Avatar className="h-9 w-9">
-            <AvatarImage src={userAvatar?.imageUrl} alt="User Avatar" data-ai-hint={userAvatar?.imageHint} />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
-        </nav>
+        <div className="flex items-center ml-auto gap-6">
+            <Button variant="ghost" className="text-foreground/80 hover:text-white">Configuration</Button>
+            <Button variant="ghost" className="text-foreground/80 hover:text-white">Mission</Button>
+            <Avatar className="h-9 w-9">
+              <AvatarImage src={userAvatar?.imageUrl} alt="User Avatar" data-ai-hint={userAvatar?.imageHint} />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+        </div>
       </div>
     </header>
   );

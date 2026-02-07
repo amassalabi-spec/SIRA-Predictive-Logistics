@@ -39,6 +39,7 @@ export type Shipment = {
     costPerDay: string;
   };
   checklist: readonly ChecklistItem[];
+  fallbackPredictionHours: number;
 };
 
 // Data re-ordered for logical progression
@@ -65,7 +66,8 @@ export const shipmentDetails: Shipment[] = [
       { text: "Prélèvement échantillon", status: 'completed' },
       { text: "Analyse microbiologique", status: 'action-required' },
       { text: "Certificat sanitaire", status: 'pending' },
-    ]
+    ],
+    fallbackPredictionHours: 14,
   },
   {
     id: "SH-15873",
@@ -89,7 +91,8 @@ export const shipmentDetails: Shipment[] = [
         { text: "Vérification viscosité", status: 'completed' },
         { text: "Origine pétrolière", status: 'action-required' },
         { text: "Mainlevée", status: 'pending' },
-    ]
+    ],
+    fallbackPredictionHours: 6.75,
   },
     {
     id: "SH-97254",
@@ -113,7 +116,8 @@ export const shipmentDetails: Shipment[] = [
         { text: "Scanner Rayons-X", status: 'completed' },
         { text: "Inventaire Batteries", status: 'action-required' },
         { text: "Taxation", status: 'pending' },
-    ]
+    ],
+    fallbackPredictionHours: 3,
   },
   {
     id: "SH-DOC-01",
@@ -137,6 +141,7 @@ export const shipmentDetails: Shipment[] = [
         { text: "Vérification signature", status: 'completed' },
         { text: "Cachet agent", status: 'action-required' },
         { text: "Archivage", status: 'pending' },
-    ]
+    ],
+    fallbackPredictionHours: 0.75,
   },
 ];

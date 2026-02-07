@@ -10,29 +10,18 @@
 import {ai} from '@/ai/genkit';
 import { PredictShipmentTimelineInputSchema, PredictShipmentTimelineOutputSchema } from '@/ai/schemas/predict-shipment-timeline-schema';
 import type { PredictShipmentTimelineInput, PredictShipmentTimelineOutput } from '@/ai/schemas/predict-shipment-timeline-schema';
+import { shipmentDetails as allShipments } from '@/lib/dashboard-data';
 
-// Base prediction times in hours for the fallback mechanism
-const baseFallbackTimes: Record<string, number> = {
-  'Sucre roux de canne': 14,
-  'Ordinateurs portables': 3,
-  'Documents de transit': 0.75, // 45 minutes
-  'Huile moteur': 6.75, // 6h 45m
-};
-
-function getFallbackPrediction(shipmentDetails: string, clientTimeMultiplier: number = 1.0): PredictShipmentTimelineOutput {
+function getFallbackPrediction(shipmentInfo: string, clientTimeMultiplier: number = 1.0): PredictShipmentTimelineOutput {
   let baseHours: number | undefined;
 
-  // Find the matching base time
-  for (const [key, value] of Object.entries(baseFallbackTimes)) {
-    if (shipmentDetails.includes(key)) {
-      baseHours = value;
-      break;
-    }
-  }
-
-  // Default if no match
-  if (baseHours === undefined) {
-    baseHours = baseFallbackTimes['Sucre roux de canne'];
+  const matchingShipment = allShipments.find(shipment => shipmentInfo.includes(shipment.name));
+  
+  if (matchingShipment) {
+    baseHours = matchingShipment.fallbackPredictionHours;
+  } else {
+    // Default if no match, e.g. to Sucre
+    baseHours = allShipments.find(s => s.name === 'Sucre roux de canne')?.fallbackPredictionHours ?? 14;
   }
 
   const finalTotalMinutes = baseHours * 60 * clientTimeMultiplier;
