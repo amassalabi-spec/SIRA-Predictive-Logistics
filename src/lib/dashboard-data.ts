@@ -48,8 +48,8 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "1701.13",
     weight: "100 tonnes",
     vessel: "MS-PORT GAIA",
-    timeRemaining: "18h 45m",
-    totalTimeRemaining: "Prêt dans 26h 20m",
+    timeRemaining: "15min",
+    totalTimeRemaining: "Prêt dans 45min",
     currentStepDescription: "Analyse Labo ONSSA",
     controllingAuthority: "ONSSA - Contrôle Sanitaire",
     agencyShortName: "ONSSA",
@@ -57,7 +57,7 @@ export const shipmentDetails: Shipment[] = [
     icon: Package,
     activeWorkflowStepIndex: 4,
     surcharges: {
-      daysRemaining: 2,
+      daysRemaining: 7,
       costPerDay: "-5000 MAD / Jour",
     },
     checklist: [
@@ -72,8 +72,8 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "8471.30",
     weight: "5 tonnes",
     vessel: "MSC FLAVIA",
-    timeRemaining: "1h 15m",
-    totalTimeRemaining: "Prêt dans 3h 10m",
+    timeRemaining: "4h 20m",
+    totalTimeRemaining: "Prêt dans 6h 45m",
     currentStepDescription: "Passage au Scanner",
     controllingAuthority: "Douane - Contrôle de Valeur",
     agencyShortName: "DOUANE",
@@ -81,7 +81,7 @@ export const shipmentDetails: Shipment[] = [
     icon: Laptop,
     activeWorkflowStepIndex: 2,
     surcharges: {
-      daysRemaining: 5,
+      daysRemaining: 4,
       costPerDay: "-8000 MAD / Jour",
     },
     checklist: [
@@ -96,8 +96,8 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "2710.19",
     weight: "50 tonnes",
     vessel: "CMA CGM A. LINCOLN",
-    timeRemaining: "4h 20m",
-    totalTimeRemaining: "Prêt dans 6h 45m",
+    timeRemaining: "1h 15m",
+    totalTimeRemaining: "Prêt dans 3h 10m",
     currentStepDescription: "Vérification Conformité",
     controllingAuthority: "Ministère de l'Industrie et du Commerce",
     agencyShortName: "MCI/DOUANE",
@@ -105,7 +105,7 @@ export const shipmentDetails: Shipment[] = [
     icon: Droplets,
     activeWorkflowStepIndex: 3,
     surcharges: {
-      daysRemaining: 4,
+      daysRemaining: 2,
       costPerDay: "-3500 MAD / Jour",
     },
     checklist: [
@@ -120,8 +120,8 @@ export const shipmentDetails: Shipment[] = [
     hsCode: "4901.99",
     weight: "1 kg",
     vessel: "N/A",
-    timeRemaining: "15min",
-    totalTimeRemaining: "Prêt dans 45min",
+    timeRemaining: "18h 45m",
+    totalTimeRemaining: "Prêt dans 26h 20m",
     currentStepDescription: "Validation Signature",
     controllingAuthority: "PortNet / Douane",
     agencyShortName: "PORTNET",
@@ -129,7 +129,7 @@ export const shipmentDetails: Shipment[] = [
     icon: FileText,
     activeWorkflowStepIndex: 1,
     surcharges: {
-      daysRemaining: 0,
+      daysRemaining: 5,
       costPerDay: "0 MAD / Jour",
     },
     checklist: [
