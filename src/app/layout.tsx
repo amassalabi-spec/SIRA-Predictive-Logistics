@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'PortNet Vision AI Dashboard',
+  title: 'SIRA Dashboard',
   description: 'Intelligent logistics dashboard',
 };
 
