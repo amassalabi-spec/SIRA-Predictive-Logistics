@@ -6,15 +6,15 @@ import { cn } from "@/lib/utils";
 const complianceStepConfig = {
   completed: {
     icon: CheckCircle,
-    color: "text-green-400",
+    color: "text-green-500",
   },
   'action-required': {
     icon: AlertTriangle,
-    color: "text-yellow-400",
+    color: "text-amber-500",
   },
   pending: {
     icon: ClipboardList,
-    color: "text-blue-400",
+    color: "text-blue-500",
   },
 };
 
@@ -27,21 +27,21 @@ export function CrisisRoomWidget({ checklist }: CrisisRoomWidgetProps) {
 
   return (
     <Card className={cn(
-      "backdrop-blur-xl border border-white/10 text-white transition-colors duration-300",
-      hasActionRequired ? "bg-amber-900/40" : "bg-sky-900/30"
+      "rounded-xl shadow-sm transition-colors duration-300 h-full",
+      hasActionRequired ? "bg-amber-50/70 border-amber-200" : "bg-white border-slate-200/60"
     )}>
       <CardHeader>
-        <CardTitle className="text-lg font-medium text-foreground">Check-list de Conformité SIRA</CardTitle>
+        <CardTitle className="text-lg font-semibold text-slate-900">Check-list de Conformité SIRA</CardTitle>
       </CardHeader>
       <CardContent>
-        <ul className="space-y-4 pt-2">
+        <ul className="space-y-4">
           {checklist.map((step, index) => {
             const config = complianceStepConfig[step.status];
             const Icon = config.icon;
             return (
               <li key={index} className="flex items-start gap-3">
                 <Icon className={`h-5 w-5 mt-0.5 flex-shrink-0 ${config.color}`} />
-                <span className="text-foreground/90">{step.text}</span>
+                <span className="text-slate-700">{step.text}</span>
               </li>
             );
           })}

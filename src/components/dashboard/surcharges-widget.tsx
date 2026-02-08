@@ -10,33 +10,29 @@ interface SurchargesWidgetProps {
 }
 
 export function SurchargesWidget({ daysRemaining, costPerDay }: SurchargesWidgetProps) {
+  const isUrgent = daysRemaining <= 2;
   return (
-    <Card className={cn(
-      "relative overflow-hidden text-white rounded-xl shadow-lg transition-colors duration-300",
-      daysRemaining <= 2
-        ? "bg-gradient-to-br from-red-600 to-rose-800"
-        : "bg-gradient-to-br from-green-600 to-teal-800"
-    )}>
-      {daysRemaining <= 2 && (
-        <div className="absolute top-4 right-4 z-20">
-            <Badge variant="destructive" className="animate-pulse text-base font-bold py-1 px-3 border-2 border-white/50">
-                URGENT
-            </Badge>
-        </div>
-      )}
+    <Card className="bg-white rounded-xl shadow-sm border-slate-200/60 h-full">
       <CardContent className="p-6 relative z-10 flex flex-col justify-between h-full">
         <div>
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold">Surestaries</h3>
-            <AlertTriangle className="h-5 w-5 text-white/80" />
+            <h3 className="text-lg font-semibold text-slate-900">Surestaries</h3>
+             {isUrgent && (
+              <Badge variant="destructive" className="animate-pulse text-base font-bold py-1 px-3 border-2 border-white/50">
+                  URGENT
+              </Badge>
+            )}
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-8xl font-bold">{daysRemaining}</span>
-            <span className="text-2xl font-medium">Jours Restants</span>
+            <span className={cn(
+              "text-7xl font-bold",
+               isUrgent ? "text-red-500" : "text-green-500"
+            )}>{daysRemaining}</span>
+            <span className="text-2xl font-medium text-slate-600">Jours Restants</span>
           </div>
-          <p className="text-white/80">{costPerDay}</p>
+          <p className="text-slate-500">{costPerDay}</p>
         </div>
-        <Button variant="secondary" className="mt-4 w-full bg-white/20 hover:bg-white/30 text-white">
+        <Button variant="secondary" className="mt-4 w-full bg-slate-100 hover:bg-slate-200 text-slate-800">
           <TrendingUp className="mr-2 h-4 w-4" />
           Prioriser avec l'agent SIRA
         </Button>

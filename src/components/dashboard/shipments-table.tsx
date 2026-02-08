@@ -12,30 +12,31 @@ import type { Shipment } from "@/lib/dashboard-data";
 import { cn } from "@/lib/utils";
 
 const statusColors: Record<Shipment["tableStatus"], string> = {
-  "En transit": "text-blue-400",
-  "Douane": "text-amber-400",
-  "Retardé": "text-red-400",
+  "En transit": "text-blue-600 bg-blue-50",
+  "Douane": "text-amber-600 bg-amber-50",
+  "Retardé": "text-red-600 bg-red-50",
 };
 
 interface ShipmentsTableProps {
   shipments: Shipment[];
   onShipmentSelect: (id: string) => void;
+  selectedShipmentId: string;
 }
 
-export function ShipmentsTable({ shipments, onShipmentSelect }: ShipmentsTableProps) {
+export function ShipmentsTable({ shipments, onShipmentSelect, selectedShipmentId }: ShipmentsTableProps) {
   return (
-    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white">
+    <Card className="bg-white rounded-xl shadow-sm border-slate-200/60">
       <CardHeader>
-        <CardTitle className="text-lg font-medium text-foreground">Suivi des Expéditions</CardTitle>
+        <CardTitle className="text-lg font-semibold text-slate-900">Suivi des Expéditions</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <Table>
           <TableHeader>
-            <TableRow className="border-white/10 hover:bg-transparent">
-              <TableHead className="text-foreground/80">Marchandise</TableHead>
-              <TableHead className="text-foreground/80">ID</TableHead>
-              <TableHead className="text-foreground/80">Status</TableHead>
-              <TableHead className="text-right text-foreground/80">Action</TableHead>
+            <TableRow className="border-b-slate-100 hover:bg-transparent">
+              <TableHead className="text-slate-500">Marchandise</TableHead>
+              <TableHead className="text-slate-500">ID</TableHead>
+              <TableHead className="text-slate-500">Status</TableHead>
+              <TableHead className="text-right text-slate-500">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -43,20 +44,29 @@ export function ShipmentsTable({ shipments, onShipmentSelect }: ShipmentsTablePr
               <TableRow 
                 key={shipment.id}
                 onClick={() => onShipmentSelect(shipment.id)}
-                className="border-white/10 hover:bg-white/5 cursor-pointer"
+                className={cn(
+                  "border-b-slate-100 last:border-b-0 hover:bg-blue-50/50 cursor-pointer",
+                  shipment.id === selectedShipmentId && "bg-blue-50/80"
+                )}
               >
-                <TableCell className="font-medium flex items-center gap-2">
-                  <shipment.icon className="h-4 w-4 text-primary" />
+                <TableCell className={cn(
+                  "font-medium text-slate-800 flex items-center gap-3 py-4 transition-all duration-300",
+                  shipment.id === selectedShipmentId && "border-l-4 border-blue-600"
+                )}>
+                  <shipment.icon className="h-5 w-5 text-blue-600" />
                   {shipment.name}
                 </TableCell>
-                <TableCell className="text-foreground/80">{shipment.id}</TableCell>
+                <TableCell className="text-slate-500">{shipment.id}</TableCell>
                 <TableCell>
-                  <span className={cn("font-semibold", statusColors[shipment.tableStatus])}>
+                  <span className={cn(
+                    "font-semibold text-xs py-1 px-2 rounded-full",
+                    statusColors[shipment.tableStatus])
+                  }>
                     {shipment.tableStatus}
                   </span>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button variant="outline" size="sm" className="bg-transparent border-primary/50 text-primary/80 hover:bg-primary/10 hover:text-primary">
+                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-100/50">
                     Détails
                   </Button>
                 </TableCell>

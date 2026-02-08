@@ -30,14 +30,12 @@ function formatMinutesToHours(minutes: number): string {
 export default function DashboardPage() {
   const [selectedClientId, setSelectedClientId] = useState<string>('9901');
 
-  // Get the list of shipments available for the currently selected client
   const availableShipments = allShipmentData.filter(shipment => 
     clients.find(c => c.id === selectedClientId)?.shipmentIds.includes(shipment.id)
   );
 
   const [selectedShipmentId, setSelectedShipmentId] = useState<string>(availableShipments[0].id);
 
-  // When the client changes, update the available shipments and reset the selected shipment to the first one.
   const handleClientChange = (clientId: string) => {
     if (clientId) {
       setSelectedClientId(clientId);
@@ -46,6 +44,8 @@ export default function DashboardPage() {
       );
       if (newAvailableShipments.length > 0) {
         setSelectedShipmentId(newAvailableShipments[0].id);
+      } else {
+        setSelectedShipmentId('');
       }
     }
   };
@@ -54,35 +54,37 @@ export default function DashboardPage() {
     setSelectedShipmentId(shipmentId);
   };
   
-  // Safeguard to ensure selectedShipmentId is always valid for the selected client.
   useEffect(() => {
-    if (!availableShipments.some(s => s.id === selectedShipmentId)) {
-      setSelectedShipmentId(availableShipments[0]?.id);
+    const currentAvailableShipments = allShipmentData.filter(shipment => 
+      clients.find(c => c.id === selectedClientId)?.shipmentIds.includes(shipment.id)
+    );
+    if (!currentAvailableShipments.some(s => s.id === selectedShipmentId)) {
+      setSelectedShipmentId(currentAvailableShipments[0]?.id || '');
     }
-  }, [selectedClientId, selectedShipmentId, availableShipments]);
+  }, [selectedClientId, selectedShipmentId]);
 
 
   const selectedClient = clients.find(c => c.id === selectedClientId)!;
   
-  // Find the full object for the selected shipment. Fallback to first available if not found.
   const baseSelectedShipment = 
     availableShipments.find(s => s.id === selectedShipmentId) || availableShipments[0];
 
-  // If baseSelectedShipment is null (e.g., client has no shipments), we need to handle this.
   if (!baseSelectedShipment) {
     return (
-      <div className="bg-background text-foreground min-h-screen flex flex-col items-center justify-center">
+      <div className="bg-slate-50 text-slate-700 min-h-screen flex flex-col">
         <Header clientName={selectedClient?.name ?? 'No Client'}/>
-        <main className="flex-1 text-center">
+        <main className="flex-1 container mx-auto py-8">
           <ClientSelector selectedClientId={selectedClientId} onClientChange={handleClientChange} />
-          <p className="mt-8">Ce client n'a pas d'expéditions en cours.</p>
+          <div className="text-center bg-white rounded-xl shadow-sm p-12 mt-8">
+            <h2 className="text-xl font-semibold text-slate-800">Aucune expédition en cours</h2>
+            <p className="mt-2 text-slate-500">Ce client n'a pas d'expéditions en cours de suivi.</p>
+          </div>
         </main>
         <SiraSearchBar />
       </div>
     )
   }
 
-  // Create a derived shipment object with calculated times
   const displayedShipment = {
       ...baseSelectedShipment,
       timeRemaining: formatMinutesToHours(baseSelectedShipment.baseTimeRemainingMinutes * selectedClient.timeMultiplier),
@@ -92,29 +94,34 @@ export default function DashboardPage() {
   const tableShipments = availableShipments.filter(s => s.id !== selectedShipmentId);
   
   return (
-    <div className="bg-background text-foreground min-h-screen flex flex-col pb-32">
+    <div className="bg-slate-50 text-slate-700 min-h-screen flex flex-col pb-32">
       <Header clientName={selectedClient.name}/>
-      <main className="flex-1 space-y-8">
+      <main className="flex-1 container mx-auto py-8 space-y-6">
         <ClientSelector selectedClientId={selectedClientId} onClientChange={handleClientChange} />
-        <div className="px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="space-y-6">
             <ActiveShipment shipment={displayedShipment} />
             <WorkflowTimeline 
-              key={`${selectedShipmentId}-${selectedClientId}`} // Reset timeline on change
+              key={`${selectedShipmentId}-${selectedClientId}`}
               workflowSteps={workflowSteps}
               activeShipment={displayedShipment}
               clientTimeMultiplier={selectedClient.timeMultiplier}
             />
             <ShipmentsTable 
-              shipments={tableShipments}
+              shipments={availableShipments}
               onShipmentSelect={handleShipmentSelect}
+              selectedShipmentId={selectedShipmentId}
             />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <SurchargesWidget 
-                daysRemaining={displayedShipment.surcharges.daysRemaining}
-                costPerDay={displayedShipment.surcharges.costPerDay}
-              />
-              <CrisisRoomWidget checklist={displayedShipment.checklist} />
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+              <div className="lg:col-span-3">
+                <SurchargesWidget 
+                  daysRemaining={displayedShipment.surcharges.daysRemaining}
+                  costPerDay={displayedShipment.surcharges.costPerDay}
+                />
+              </div>
+              <div className="lg:col-span-2">
+                <CrisisRoomWidget checklist={displayedShipment.checklist} />
+              </div>
             </div>
         </div>
       </main>

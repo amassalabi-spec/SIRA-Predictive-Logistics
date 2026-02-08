@@ -12,12 +12,12 @@ interface ClientSelectorProps {
 
 export function ClientSelector({ selectedClientId, onClientChange }: ClientSelectorProps) {
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
-        <label htmlFor="client-selector" className="block text-sm font-medium text-foreground/80 mb-2">Profil Transitaire</label>
+    <div>
+        <label htmlFor="client-selector" className="block text-sm font-medium text-slate-600 mb-2">Profil Transitaire</label>
         <Select onValueChange={onClientChange} defaultValue={selectedClientId} name="client-selector">
-            <SelectTrigger className="w-full sm:w-[350px] bg-white/5 border-white/10 text-left">
+            <SelectTrigger className="w-full sm:w-[350px] bg-white border-slate-200/80 text-slate-900 text-left rounded-lg shadow-sm">
                 <div className="flex items-center gap-3">
-                    <Building className="h-4 w-4 text-foreground/70" />
+                    <Building className="h-4 w-4 text-slate-500" />
                     <SelectValue placeholder="Sélectionner un client..." />
                 </div>
             </SelectTrigger>
@@ -26,7 +26,7 @@ export function ClientSelector({ selectedClientId, onClientChange }: ClientSelec
                     <SelectItem key={client.id} value={client.id}>
                         <div className="flex flex-col">
                             <span className="font-semibold">{client.name} (#{client.id})</span>
-                            <span className="text-xs text-foreground/70">{client.profileStatus} (Malus: +{((client.timeMultiplier - 1) * 100).toFixed(0)}%)</span>
+                            <span className="text-xs text-slate-500">{client.profileStatus} (Malus: +{((client.timeMultiplier - 1) * 100).toFixed(0)}%)</span>
                         </div>
                     </SelectItem>
                 ))}

@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { Mic, Bot, Loader2 } from "lucide-react";
+import { Mic, Bot, Loader2, Sparkles } from "lucide-react";
 import { askSira } from "@/ai/flows/sira-query-flow";
 import type { SiraQueryOutput } from "@/ai/schemas/sira-query-schema";
 import { useToast } from "@/hooks/use-toast";
@@ -66,7 +66,7 @@ export function SiraSearchBar() {
 
   return (
     <>
-      <footer className="fixed bottom-0 left-0 right-0 p-2 bg-background/90 backdrop-blur-md border-t border-white/10 z-50">
+      <footer className="fixed bottom-0 left-0 right-0 p-2 bg-slate-100/80 backdrop-blur-md border-t border-slate-200 z-50">
         <div className="container max-w-2xl mx-auto">
           <form action={formAction} className="relative">
             <Input
@@ -76,17 +76,17 @@ export function SiraSearchBar() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isPending}
-              className="w-full h-11 pl-12 pr-28 rounded-full bg-white/5 border-white/20 text-white placeholder:text-foreground/60 focus:ring-primary focus:ring-2"
+              className="w-full h-12 pl-12 pr-28 rounded-full bg-white shadow-sm border-slate-300 text-slate-800 placeholder:text-slate-500 focus:ring-blue-500 focus:ring-2"
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2">
-              <Mic className="h-5 w-5 text-foreground/60" />
+              <Sparkles className="h-5 w-5 text-slate-500" />
             </div>
             <div className="absolute right-1.5 top-1/2 -translate-y-1/2">
               <Button
                 type="submit"
-                size="sm"
+                size="lg"
                 disabled={isPending || !inputValue}
-                className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                className="rounded-full bg-blue-600 text-white hover:bg-blue-700 h-9"
               >
                 {isPending ? <Loader2 className="animate-spin" /> : "Envoyer"}
               </Button>
@@ -96,21 +96,21 @@ export function SiraSearchBar() {
       </footer>
 
       <Sheet open={isSheetOpen} onOpenChange={handleSheetChange}>
-        <SheetContent side="bottom" className="bg-background/95 border-t-white/10 text-foreground max-h-[75vh] flex flex-col rounded-t-lg">
+        <SheetContent side="bottom" className="bg-white/95 backdrop-blur-lg border-t-slate-200 text-slate-800 max-h-[75vh] flex flex-col rounded-t-lg">
           <SheetHeader className="text-left">
-            <SheetTitle className="flex items-center gap-3 text-2xl">
-              <Bot className="text-primary h-7 w-7" />
+            <SheetTitle className="flex items-center gap-3 text-2xl text-slate-900">
+              <Bot className="text-blue-600 h-7 w-7" />
               Réponse de SIRA
             </SheetTitle>
             {state.query && (
-              <SheetDescription className="pt-2">
+              <SheetDescription className="pt-2 text-slate-600">
                 Résultats pour : "{state.query}"
               </SheetDescription>
             )}
           </SheetHeader>
           <div className="flex-1 overflow-y-auto py-4 text-base">
             {state.response && (
-              <p className="whitespace-pre-wrap">{state.response.response}</p>
+              <p className="whitespace-pre-wrap text-slate-700">{state.response.response}</p>
             )}
           </div>
         </SheetContent>

@@ -8,6 +8,7 @@ import type { PredictShipmentTimelineOutput } from "@/ai/schemas/predict-shipmen
 import type { Shipment, WorkflowStep } from "@/lib/dashboard-data";
 import { Sparkles, Bot, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 const initialState: {
   prediction?: PredictShipmentTimelineOutput;
@@ -52,30 +53,27 @@ export function PredictionEngine({ activeShipment, workflowSteps, clientTimeMult
   const prediction = state.prediction;
 
   return (
-    <div className="border-t border-white/10 pt-6">
+    <div className="border-t border-slate-200/80 pt-6">
       <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="h-5 w-5 text-primary" />
-        <h3 className="font-semibold text-foreground">Prédictions de SIRA</h3>
+        <Sparkles className="h-5 w-5 text-blue-600" />
+        <h3 className="font-semibold text-slate-900">Prédictions de SIRA</h3>
       </div>
       
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         {!prediction ? (
-          <div className="flex items-center gap-3 text-foreground/80">
+          <div className="flex items-center gap-3 text-slate-500">
             <Bot className="h-5 w-5"/>
-            <span>Cliquez pour obtenir les prédictions...</span>
+            <span>Cliquez pour obtenir les prédictions d'arrivée...</span>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-4 text-sm w-full">
-            <div className="font-medium">Sortie estimée : <span className="text-white font-semibold">{prediction.estimatedExitDate}</span></div>
-            <div className="font-medium">Encombrement : <span className="text-white font-semibold">{prediction.congestionLevel}</span></div>
+            <div className="font-medium text-slate-600">Sortie estimée : <span className="text-slate-900 font-semibold">{prediction.estimatedExitDate}</span></div>
+            <div className="font-medium text-slate-600">Encombrement : <span className="text-slate-900 font-semibold">{prediction.congestionLevel}</span></div>
             {prediction.readyForPickup && (
               <div>
-                <Button 
-                  size="sm" 
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_15px_hsl(var(--primary))] transition-shadow hover:shadow-[0_0_25px_hsl(var(--primary))]"
-                >
-                  Prêt pour Enlèvement
-                </Button>
+                 <Badge className="bg-green-100 text-green-700 border-green-200 py-1 px-3 text-sm font-semibold">
+                    Prêt pour Enlèvement
+                </Badge>
               </div>
             )}
           </div>
@@ -86,10 +84,11 @@ export function PredictionEngine({ activeShipment, workflowSteps, clientTimeMult
             <Button 
               type="submit"
               disabled={isPredicting}
-              className="bg-primary/10 border border-primary text-primary hover:bg-primary/20"
+              variant="outline"
+              className="bg-white border-slate-300 text-slate-700 hover:bg-slate-50"
             >
               {isPredicting ? <Loader2 className="animate-spin mr-2"/> : <Sparkles className="mr-2 h-4 w-4"/>}
-              {isPredicting ? 'Analyse en cours...' : 'Prédire'}
+              {isPredicting ? 'Analyse en cours...' : 'Lancer Prédiction'}
             </Button>
           </form>
         )}
